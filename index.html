@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis Completo del Equipo de Desarrollo</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        nav {
+            background: #34495e;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        nav a:hover {
+            background: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        section {
+            margin-bottom: 50px;
+        }
+
+        h2 {
+            color: #2c3e50;
+            font-size: 2em;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #34495e;
+            font-size: 1.5em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        .summary-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .summary-box h3 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .summary-box p {
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card h4 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .stat-card p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin: 30px 0;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .info-box {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .info-box h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        .info-box ul {
+            list-style-position: inside;
+            color: #555;
+        }
+
+        .info-box li {
+            padding: 8px 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .info-box li:last-child {
+            border-bottom: none;
+        }
+
+        .strength {
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .weakness {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .opportunity {
+            color: #3498db;
+            font-weight: bold;
+        }
+
+        .tech-badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            margin: 5px;
+            font-size: 0.9em;
+        }
+
+        .alert-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .alert-box strong {
+            color: #856404;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .success-box strong {
+            color: #155724;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        table th {
+            background: #2c3e50;
+            color: white;
+            padding: 15px;
+            text-align: left;
+        }
+
+        table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table tr:hover {
+            background: #f5f5f5;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s;
+            margin: 10px 5px;
+        }
+
+        .btn-primary:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+
+            header h1 {
+                font-size: 1.8em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ANÁLISIS CONSOLIDADO DEL EQUIPO DE DESARROLLO</h1>
+            <p>Evaluación Técnica Completa y Estrategia de Posicionamiento</p>
+        </header>
+
+        <nav>
+            <a href="#resumen">Resumen Ejecutivo</a>
+            <a href="#equipo">Análisis del Equipo</a>
+            <a href="#tecnologias">Tecnologías</a>
+            <a href="#oportunidad-ia">Automatización IA</a>
+            <a href="#bancario">Sector Bancario</a>
+            <a href="perfiles.html">Ver Perfiles Individuales</a>
+        </nav>
+
+        <div class="content">
+            <!-- RESUMEN EJECUTIVO -->
+            <section id="resumen">
+                <h2>Resumen Ejecutivo</h2>
+                
+                <div class="summary-box">
+                    <h3>Visión General</h3>
+                    <p>
+                        Este análisis presenta una evaluación exhaustiva de un equipo de <strong>8 desarrolladores de software</strong> 
+                        altamente calificados, con el objetivo de identificar fortalezas tecnológicas, oportunidades de negocio 
+                        y alineación estratégica con sectores clave como automatización de IA y banca digital.
+                    </p>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h4>8</h4>
+                        <p>Desarrolladores</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>3</h4>
+                        <p>En Sector Bancario</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>20+</h4>
+                        <p>Tecnologías Dominadas</p>
+                    </div>
+                    <div class="stat-card">
+                        <h4>6</h4>
+                        <p>Años Experiencia Promedio</p>
+                    </div>
+                </div>
+
+                <div class="two-column">
+                    <div class="info-box">
+                        <h4>Fortalezas Principales</h4>
+                        <ul>
+                            <li class="strength">Stack tecnológico diversificado (.NET, Java, Python, JavaScript, Swift)</li>
+                            <li class="strength">3 desarrolladores con experiencia directa en banca</li>
+                            <li class="strength">2 especialistas en desarrollo móvil iOS nativo</li>
+                            <li class="strength">Expertise en microservicios y arquitecturas modernas</li>
+                            <li class="strength">Capacidad DevOps y Cloud (Docker, Kubernetes, AWS)</li>
+                            <li class="strength">Experiencia en automatización empresarial (Odoo)</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box">
+                        <h4>Áreas de Mejora Identificadas</h4>
+                        <ul>
+                            <li class="weakness">Limitada experiencia en IA generativa y LLMs</li>
+                            <li class="weakness">Sin experiencia en herramientas como n8n, ElevenLabs</li>
+                            <li class="weakness">Falta de especialización en voice AI</li>
+                            <li class="weakness">Nivel de inglés mayormente B1-B2 (ideal C1)</li>
+                            <li class="weakness">Poca experiencia documentada en cloud avanzado</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="alert-box">
+                    <strong>Oportunidades Principales Identificadas:</strong>
+                    <ul style="margin-top: 10px;">
+                        <li><strong>Automatización de IA y Agentes Conversacionales:</strong> Requiere upskilling pero el equipo tiene bases técnicas sólidas</li>
+                        <li><strong>Sector Bancario:</strong> Ventaja competitiva significativa con 3 desarrolladores en instituciones financieras</li>
+                        <li><strong>Desarrollo de SaaS:</strong> Capacidad técnica para construir plataformas enterprise escalables</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- ANÁLISIS DEL EQUIPO -->
+            <section id="equipo">
+                <h2>Análisis del Equipo</h2>
+
+                <h3>Composición del Equipo</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Especialización</th>
+                            <th>Empresa Actual</th>
+                            <th>Nivel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Roylin Rodriguez</td>
+                            <td>Backend Developer (.NET/C#)</td>
+                            <td>Altice Dominicana</td>
+                            <td>Semi-Senior</td>
+                        </tr>
+                        <tr>
+                            <td>Yahinniel Torres</td>
+                            <td>Full Stack Developer (Cloud/DevOps)</td>
+                            <td>UTreee IT</td>
+                            <td>Semi-Senior</td>
+                        </tr>
+                        <tr>
+                            <td>Axel Soto</td>
+                            <td>iOS Developer (SwiftUI)</td>
+                            <td>Banco Popular</td>
+                            <td>Junior-Semi Senior</td>
+                        </tr>
+                        <tr>
+                            <td>Ninel Feliz</td>
+                            <td>UI/UX Designer + Developer</td>
+                            <td>INTELCA SRL</td>
+                            <td>Junior</td>
+                        </tr>
+                        <tr>
+                            <td>Emmanuel Espinal</td>
+                            <td>Ingeniero Senior Integración</td>
+                            <td>Banreservas</td>
+                            <td>Senior</td>
+                        </tr>
+                        <tr>
+                            <td>Gary Campusano (Dev)</td>
+                            <td>Backend Developer (Odoo)</td>
+                            <td>OIKOS CHAIN</td>
+                            <td>Junior</td>
+                        </tr>
+                        <tr>
+                            <td>Geremy Ferran</td>
+                            <td>iOS + Full Stack Developer</td>
+                            <td>Banco Popular / Smartraveling</td>
+                            <td>Semi-Senior</td>
+                        </tr>
+                        <tr>
+                            <td>Gary Campusano (QA)</td>
+                            <td>QA Funcional + Test Automation</td>
+                            <td>Babel Group</td>
+                            <td>Junior-Semi Senior</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="chart-container">
+                    <canvas id="experienciaChart"></canvas>
+                </div>
+
+                <div class="success-box">
+                    <strong>Punto Fuerte del Equipo:</strong> La combinación de desarrolladores con experiencia directa en 
+                    instituciones financieras (Banreservas, Banco Popular) junto con especialistas en cloud y automatización 
+                    crea un perfil técnico robusto y versátil, ideal para proyectos enterprise complejos.
+                </div>
+            </section>
+
+            <!-- TECNOLOGÍAS -->
+            <section id="tecnologias">
+                <h2>Distribución de Tecnologías</h2>
+
+                <h3>Backend Technologies</h3>
+                <div style="margin: 20px 0;">
+                    <span class="tech-badge">.NET/C# - 6 devs</span>
+                    <span class="tech-badge">Java - 3 devs</span>
+                    <span class="tech-badge">Python - 5 devs</span>
+                    <span class="tech-badge">Node.js - 6 devs</span>
+                    <span class="tech-badge">PHP/Laravel - 1 dev</span>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="backendChart"></canvas>
+                </div>
+
+                <h3>Frontend & Mobile Technologies</h3>
+                <div style="margin: 20px 0;">
+                    <span class="tech-badge">React - 4 devs</span>
+                    <span class="tech-badge">Angular - 1 dev</span>
+                    <span class="tech-badge">Next.js - 2 devs</span>
+                    <span class="tech-badge">Blazor - 2 devs</span>
+                    <span class="tech-badge">Swift/SwiftUI - 2 devs</span>
+                    <span class="tech-badge">Flutter - 1 dev</span>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="frontendChart"></canvas>
+                </div>
+
+                <h3>Databases</h3>
+                <div class="chart-container">
+                    <canvas id="databaseChart"></canvas>
+                </div>
+
+                <h3>Cloud & DevOps</h3>
+                <div class="two-column">
+                    <div class="info-box">
+                        <h4>Experiencia en Cloud</h4>
+                        <ul>
+                            <li>AWS (EC2, S3, RDS, Lambda) - 1 desarrollador</li>
+                            <li>Azure DevOps - 2 desarrolladores</li>
+                            <li>OpenShift - 1 desarrollador</li>
+                            <li>Docker - 2 desarrolladores</li>
+                            <li>Kubernetes - 1 desarrollador</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box">
+                        <h4>CI/CD & Tools</h4>
+                        <ul>
+                            <li>GitHub Actions - 2 desarrolladores</li>
+                            <li>Azure DevOps Pipelines - 2 desarrolladores</li>
+                            <li>Git/GitHub - 8 desarrolladores</li>
+                            <li>Jira - 3 desarrolladores</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="alert-box">
+                    <strong>Brecha Identificada:</strong> Aunque el equipo tiene bases en cloud computing, solo 1 desarrollador 
+                    tiene experiencia profunda en AWS. Se recomienda invertir en certificaciones de cloud (AWS Solutions Architect, 
+                    Azure Developer) para expandir estas capacidades.
+                </div>
+            </section>
+
+            <!-- AUTOMATIZACIÓN DE IA -->
+            <section id="oportunidad-ia">
+                <h2>Oportunidad: Automatización de IA con Agentes Conversacionales</h2>
+
+                <div class="summary-box">
+                    <h3>Descripción del Proyecto Cliente</h3>
+                    <p>
+                        <strong>Objetivo:</strong> Automatizar completamente el proceso de atención al cliente mediante agentes 
+                        de IA que puedan tomar y gestionar llamadas telefónicas, responder consultas de manera natural, 
+                        integrarse con sistemas internos y escalar llamadas cuando sea necesario.
+                    </p>
+                    <p style="margin-top: 15px;">
+                        <strong>Tecnologías Requeridas:</strong>
+                    </p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>n8n - Plataforma de automatización de workflows</li>
+                        <li>ElevenLabs - API de síntesis de voz con voces ultra realistas</li>
+                        <li>Procesamiento de lenguaje natural (NLP)</li>
+                        <li>Integración con sistemas de telefonía (VoIP)</li>
+                    </ul>
+                </div>
+
+                <h3>Evaluación de Capacidades Actuales</h3>
+
+                <div class="two-column">
+                    <div class="info-box">
+                        <h4>Fortalezas Aplicables</h4>
+                        <ul>
+                            <li class="strength">Sólida experiencia en APIs e integraciones</li>
+                            <li class="strength">Conocimiento de arquitecturas de microservicios</li>
+                            <li class="strength">Experiencia en Node.js y Python</li>
+                            <li class="strength">Capacidad de trabajar con sistemas en tiempo real</li>
+                            <li class="strength">Experiencia en bases de datos para contexto</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box">
+                        <h4>Brechas Críticas</h4>
+                        <ul>
+                            <li class="weakness">Sin experiencia en n8n o similares</li>
+                            <li class="weakness">Sin experiencia con ElevenLabs</li>
+                            <li class="weakness">Falta de proyectos con LLMs</li>
+                            <li class="weakness">Sin integración con telefonía VoIP</li>
+                            <li class="weakness">Limitada experiencia en NLP aplicado</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Plan de Acción para Cerrar Brechas</h3>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Fase</th>
+                            <th>Duración</th>
+                            <th>Actividades</th>
+                            <th>Resultado Esperado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Fase 1: Capacitación</strong></td>
+                            <td>2-4 semanas</td>
+                            <td>
+                                • n8n Academy<br>
+                                • ElevenLabs API docs<br>
+                                • Fundamentos de LLMs<br>
+                                • Prompting engineering
+                            </td>
+                            <td>Equipo capacitado en tecnologías base</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fase 2: Proyecto Piloto</strong></td>
+                            <td>4-6 semanas</td>
+                            <td>
+                                • Agente conversacional simple<br>
+                                • Integración con Twilio<br>
+                                • Lógica de routing<br>
+                                • Testing con casos reales
+                            </td>
+                            <td>MVP funcional demostrativo</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fase 3: Implementación</strong></td>
+                            <td>8-12 semanas</td>
+                            <td>
+                                • Escalar para múltiples llamadas<br>
+                                • Integración con sistemas cliente<br>
+                                • Analytics y monitoreo<br>
+                                • Optimización de rendimiento
+                            </td>
+                            <td>Solución productiva completa</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="chart-container">
+                    <canvas id="viabilidadChart"></canvas>
+                </div>
+
+                <h3>Equipo Recomendado para el Proyecto</h3>
+
+                <div class="info-box">
+                    <h4>Equipo Core (Dedicación Completa)</h4>
+                    <ul>
+                        <li><strong>Emmanuel Espinal (Tech Lead)</strong> - Experiencia en integración y liderazgo técnico</li>
+                        <li><strong>Yahinniel Torres (Backend/Cloud)</strong> - APIs, microservicios, AWS, DevOps</li>
+                        <li><strong>Gary Campusano (Python Specialist)</strong> - Formación en Python e IA, automatización</li>
+                    </ul>
+                </div>
+
+                <div class="info-box" style="margin-top: 20px;">
+                    <h4>Equipo de Apoyo (Tiempo Parcial)</h4>
+                    <ul>
+                        <li><strong>Roylin Rodriguez</strong> - Apoyo en backend y APIs</li>
+                        <li><strong>Gary QA</strong> - Testing y validación del sistema</li>
+                    </ul>
+                </div>
+
+                <div class="success-box">
+                    <strong>Viabilidad Técnica: MEDIA-ALTA</strong><br>
+                    El equipo tiene las bases técnicas fundamentales. Las tecnologías requeridas son accesibles y bien 
+                    documentadas. Con inversión en capacitación y posiblemente un consultor externo para las primeras 2-4 
+                    semanas, el equipo puede entregar un MVP en 6-8 semanas y una solución productiva en 12-16 semanas.
+                </div>
+
+                <div class="alert-box">
+                    <strong>Riesgo Principal:</strong> Curva de aprendizaje en tecnologías específicas y complejidad de 
+                    integración con sistemas de telefonía. La latencia y calidad de voz en tiempo real pueden ser desafiantes.
+                </div>
+            </section>
+
+            <!-- SECTOR BANCARIO -->
+            <section id="bancario">
+                <h2>Análisis: Sector Bancario y Fintech</h2>
+
+                <div class="summary-box">
+                    <h3>Ventaja Competitiva Estratégica</h3>
+                    <p>
+                        El equipo cuenta con <strong>3 desarrolladores activos en instituciones financieras dominicanas</strong>, 
+                        lo que representa una ventaja competitiva significativa. Este conocimiento interno de sistemas bancarios, 
+                        APIs de core banking, requisitos de seguridad y compliance es difícil de replicar.
+                    </p>
+                </div>
+
+                <h3>Desarrolladores con Experiencia Bancaria</h3>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Institución</th>
+                            <th>Posición</th>
+                            <th>Experiencia Clave</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Emmanuel Espinal</td>
+                            <td>Banreservas</td>
+                            <td>Ingeniero Senior Integración</td>
+                            <td>Microservicios, FICO DMPS, Oracle, integraciones complejas</td>
+                        </tr>
+                        <tr>
+                            <td>Axel Soto</td>
+                            <td>Banco Popular</td>
+                            <td>iOS Developer</td>
+                            <td>Banca móvil, APIs bancarias, seguridad, accesibilidad</td>
+                        </tr>
+                        <tr>
+                            <td>Geremy Ferran</td>
+                            <td>Banco Popular</td>
+                            <td>iOS Developer</td>
+                            <td>Apps nativas iOS, MVVM, seguridad bancaria, Scrum</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="chart-container">
+                    <canvas id="bancarioChart"></canvas>
+                </div>
+
+                <h3>Capacidades Técnicas para Proyectos Bancarios</h3>
+
+                <div class="two-column">
+                    <div class="info-box">
+                        <h4>Desarrollo de Apps Móviles Bancarias</h4>
+                        <p><strong>Capacidad: ALTA</strong></p>
+                        <ul>
+                            <li>2 especialistas iOS trabajando en bancos</li>
+                            <li>Experiencia en seguridad y transacciones</li>
+                            <li>Conocimiento de UX financiero</li>
+                            <li>Implementación de biometría y 2FA</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box">
+                        <h4>Integración de Sistemas Bancarios</h4>
+                        <p><strong>Capacidad: ALTA</strong></p>
+                        <ul>
+                            <li>Ingeniero senior en integraciones</li>
+                            <li>Experiencia con APIs de core bancario</li>
+                            <li>Conocimiento de FICO DMPS y Oracle</li>
+                            <li>Microservicios y arquitecturas distribuidas</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="two-column">
+                    <div class="info-box">
+                        <h4>Backend para Servicios Financieros</h4>
+                        <p><strong>Capacidad: ALTA</strong></p>
+                        <ul>
+                            <li>Múltiples devs .NET/Java enterprise</li>
+                            <li>Arquitecturas de microservicios</li>
+                            <li>Bases de datos relacionales robustas</li>
+                            <li>Experiencia en sistemas críticos</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box">
+                        <h4>Open Banking y APIs Financieras</h4>
+                        <p><strong>Capacidad: MEDIA-ALTA</strong></p>
+                        <ul>
+                            <li>Sólida experiencia en REST APIs</li>
+                            <li>Conocimiento de seguridad y OAuth</li>
+                            <li>Brecha: Estándares específicos de open banking</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>Oportunidades de Negocio en Banca</h3>
+
+                <div class="info-box" style="border-left-color: #27ae60;">
+                    <h4 class="opportunity">1. Modernización de Apps Bancarias</h4>
+                    <p><strong>Mercado:</strong> Bancos regionales y cooperativas de ahorro y crédito</p>
+                    <p><strong>Necesidad:</strong> Actualización de aplicaciones móviles legacy</p>
+                    <p><strong>Propuesta de Valor:</strong></p>
+                    <ul>
+                        <li>Apps iOS/Android nativas de alto rendimiento</li>
+                        <li>UX moderna e intuitiva</li>
+                        <li>Integración con sistemas core existentes</li>
+                        <li>Cumplimiento de regulaciones locales</li>
+                    </ul>
+                </div>
+
+                <div class="info-box" style="border-left-color: #3498db; margin-top: 20px;">
+                    <h4 class="opportunity">2. Plataformas de Open Banking</h4>
+                    <p><strong>Mercado:</strong> Fintechs y bancos innovadores</p>
+                    <p><strong>Necesidad:</strong> Cumplir con regulaciones emergentes de open banking</p>
+                    <p><strong>Propuesta de Valor:</strong></p>
+                    <ul>
+                        <li>Desarrollo de APIs estandarizadas</li>
+                        <li>Gestión de consentimientos</li>
+                        <li>Portales para desarrolladores</li>
+                        <li>Monitoreo y analytics</li>
+                    </ul>
+                </div>
+
+                <div class="info-box" style="border-left-color: #9b59b6; margin-top: 20px;">
+                    <h4 class="opportunity">3. Chatbots y Asistentes Virtuales Bancarios</h4>
+                    <p><strong>Mercado:</strong> Departamentos de servicio al cliente de bancos</p>
+                    <p><strong>Necesidad:</strong> Reducir costos y mejorar disponibilidad</p>
+                    <p><strong>Propuesta de Valor:</strong></p>
+                    <ul>
+                        <li>Agentes de IA entrenados en productos bancarios</li>
+                        <li>Integración con core banking</li>
+                        <li>Multicanal (web, móvil, WhatsApp)</li>
+                        <li>Analytics y mejora continua</li>
+                    </ul>
+                </div>
+
+                <div class="success-box">
+                    <strong>Diferenciador Competitivo:</strong> El conocimiento interno de 3 desarrolladores en instituciones 
+                    bancarias dominicanas, combinado con capacidades técnicas sólidas, posiciona al equipo para capitalizar 
+                    oportunidades de alto valor en modernización bancaria, open banking y automatización de procesos financieros.
+                </div>
+
+                <h3>Estrategia Recomendada</h3>
+
+                <div class="two-column">
+                    <div class="info-box">
+                        <h4>Corto Plazo (0-6 meses)</h4>
+                        <ul>
+                            <li>Desarrollar casos de estudio con proyectos actuales</li>
+                            <li>Obtener certificaciones de seguridad (PCI-DSS)</li>
+                            <li>Establecer alianzas con fintechs locales</li>
+                            <li>Crear portafolio especializado en banca</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box">
+                        <h4>Mediano Plazo (6-12 meses)</h4>
+                        <ul>
+                            <li>Lanzar producto SaaS para bancos</li>
+                            <li>Expandir a mercados regionales</li>
+                            <li>Partnerships con proveedores de core bancario</li>
+                            <li>Especializar más miembros del equipo en fintech</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RECOMENDACIONES FINALES -->
+            <section>
+                <h2>Recomendaciones Estratégicas Finales</h2>
+
+                <div class="info-box" style="border-left-color: #e74c3c;">
+                    <h4>1. Priorización de Upskilling</h4>
+                    <p><strong>CRÍTICO (Comenzar inmediatamente):</strong></p>
+                    <ul>
+                        <li>Formación en n8n y automatización de workflows</li>
+                        <li>Capacitación en APIs de IA (OpenAI, Anthropic, ElevenLabs)</li>
+                        <li>Fundamentos de LLMs y prompt engineering</li>
+                        <li>Integración con sistemas de telefonía (Twilio, Vonage)</li>
+                    </ul>
+                    <p style="margin-top: 15px;"><strong>IMPORTANTE (Próximos 3-6 meses):</strong></p>
+                    <ul>
+                        <li>Certificaciones en seguridad (PCI-DSS)</li>
+                        <li>Ampliar experiencia en AWS/Azure</li>
+                        <li>Especialización en arquitecturas de IA</li>
+                        <li>Mejora de nivel de inglés (objetivo: C1)</li>
+                    </ul>
+                </div>
+
+                <div class="info-box" style="border-left-color: #27ae60; margin-top: 20px;">
+                    <h4>2. Posicionamiento de Mercado</h4>
+                    <p><strong>Nichos de Especialización:</strong></p>
+                    <ul>
+                        <li>Soluciones bancarias y fintech (ventaja competitiva clara)</li>
+                        <li>Automatización de procesos empresariales con IA</li>
+                        <li>Desarrollo de aplicaciones móviles enterprise</li>
+                    </ul>
+                </div>
+
+                <div class="info-box" style="border-left-color: #3498db; margin-top: 20px;">
+                    <h4>3. Desarrollo de Productos Propios</h4>
+                    <p><strong>Propuestas de Productos SaaS:</strong></p>
+                    <ul>
+                        <li>Plataforma de onboarding digital para bancos</li>
+                        <li>Agente de IA conversacional para servicio al cliente (finanzas)</li>
+                        <li>Sistema de automatización de procesos para PYMEs</li>
+                    </ul>
+                </div>
+
+                <div class="summary-box" style="margin-top: 30px;">
+                    <h3>Conclusión Final</h3>
+                    <p>
+                        El equipo cuenta con <strong>bases técnicas sólidas</strong> y experiencia diversa que le permite abordar 
+                        proyectos complejos en múltiples sectores. La experiencia directa en instituciones bancarias representa 
+                        una <strong>ventaja competitiva significativa</strong>, mientras que la adopción de tecnologías de IA y 
+                        automatización es crítica para capitalizar oportunidades emergentes.
+                    </p>
+                    <p style="margin-top: 15px;">
+                        Con una inversión estratégica en formación y especialización, el equipo puede posicionarse como un 
+                        <strong>proveedor premium de soluciones tecnológicas</strong> en el sector financiero dominicano y la 
+                        región, con capacidad de expansión hacia automatización inteligente de procesos empresariales.
+                    </p>
+                    <p style="margin-top: 15px;">
+                        <strong>Tiempo estimado para preparación:</strong><br>
+                        • Proyecto de automatización de IA: <strong>6-8 semanas</strong><br>
+                        • Consolidar posición en sector bancario: <strong>3-6 meses</strong>
+                    </p>
+                </div>
+
+                <div style="text-align: center; margin-top: 40px;">
+                    <a href="perfiles.html" class="btn-primary">Ver Perfiles Individuales Detallados</a>
+                    <a href="#resumen" class="btn-primary">Volver al Inicio</a>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 Análisis de Equipo de Desarrollo - Documento Confidencial</p>
+        </footer>
+    </div>
+
+    <script>
+        // Gráfico de Experiencia por Nivel
+        const ctxExperiencia = document.getElementById('experienciaChart').getContext('2d');
+        new Chart(ctxExperiencia, {
+            type: 'bar',
+            data: {
+                labels: ['Senior', 'Semi-Senior', 'Junior'],
+                datasets: [{
+                    label: 'Número de Desarrolladores',
+                    data: [1, 4, 3],
+                    backgroundColor: [
+                        'rgba(39, 174, 96, 0.8)',
+                        'rgba(52, 152, 219, 0.8)',
+                        'rgba(241, 196, 15, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(39, 174, 96, 1)',
+                        'rgba(52, 152, 219, 1)',
+                        'rgba(241, 196, 15, 1)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Distribución de Experiencia del Equipo',
+                        font: { size: 16 }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: { stepSize: 1 }
+                    }
+                }
+            }
+        });
+
+        // Gráfico de Backend Technologies
+        const ctxBackend = document.getElementById('backendChart').getContext('2d');
+        new Chart(ctxBackend, {
+            type: 'horizontalBar',
+            data: {
+                labels: ['.NET/C#', 'Node.js', 'Python', 'Java', 'Laravel'],
+                datasets: [{
+                    label: 'Desarrolladores',
+                    data: [6, 6, 5, 3, 1],
+                    backgroundColor: 'rgba(102, 126, 234, 0.8)',
+                    borderColor: 'rgba(102, 126, 234, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Tecnologías Backend - Distribución del Equipo',
+                        font: { size: 16 }
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        max: 8
+                    }
+                }
+            }
+        });
+
+        // Gráfico de Frontend Technologies
+        const ctxFrontend = document.getElementById('frontendChart').getContext('2d');
+        new Chart(ctxFrontend, {
+            type: 'doughnut',
+            data: {
+                labels: ['React', 'Swift/SwiftUI', 'Blazor', 'Next.js', 'Angular', 'Flutter'],
+                datasets: [{
+                    data: [4, 2, 2, 2, 1, 1],
+                    backgroundColor: [
+                        'rgba(97, 218, 251, 0.8)',
+                        'rgba(255, 149, 0, 0.8)',
+                        'rgba(94, 53, 177, 0.8)',
+                        'rgba(0, 0, 0, 0.8)',
+                        'rgba(221, 0, 49, 0.8)',
+                        'rgba(2, 125, 250, 0.8)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Distribución de Tecnologías Frontend/Mobile',
+                        font: { size: 16 }
+                    },
+                    legend: {
+                        position: 'right'
+                    }
+                }
+            }
+        });
+
+        // Gráfico de Databases
+        const ctxDatabase = document.getElementById('databaseChart').getContext('2d');
+        new Chart(ctxDatabase, {
+            type: 'bar',
+            data: {
+                labels: ['SQL Server', 'PostgreSQL', 'Oracle', 'MySQL', 'MongoDB'],
+                datasets: [{
+                    label: 'Desarrolladores con Experiencia',
+                    data: [7, 4, 3, 2, 2],
+                    backgroundColor: 'rgba(231, 76, 60, 0.8)',
+                    borderColor: 'rgba(231, 76, 60, 1)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Experiencia en Bases de Datos',
+                        font: { size: 16 }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 8
+                    }
+                }
+            }
+        });
+
+        // Gráfico de Viabilidad IA
+        const ctxViabilidad = document.getElementById('viabilidadChart').getContext('2d');
+        new Chart(ctxViabilidad, {
+            type: 'radar',
+            data: {
+                labels: ['APIs/Integraciones', 'Microservicios', 'Tiempo Real', 'Cloud/DevOps', 'IA/LLMs', 'n8n/Automatización'],
+                datasets: [{
+                    label: 'Capacidad Actual',
+                    data: [9, 8, 7, 6, 3, 2],
+                    fill: true,
+                    backgroundColor: 'rgba(102, 126, 234, 0.3)',
+                    borderColor: 'rgba(102, 126, 234, 1)',
+                    pointBackgroundColor: 'rgba(102, 126, 234, 1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgba(102, 126, 234, 1)'
+                }, {
+                    label: 'Requerimiento Proyecto',
+                    data: [9, 8, 9, 7, 9, 10],
+                    fill: true,
+                    backgroundColor: 'rgba(231, 76, 60, 0.3)',
+                    borderColor: 'rgba(231, 76, 60, 1)',
+                    pointBackgroundColor: 'rgba(231, 76, 60, 1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgba(231, 76, 60, 1)'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Análisis de Viabilidad: Automatización de IA',
+                        font: { size: 16 }
+                    }
+                },
+                scales: {
+                    r: {
+                        beginAtZero: true,
+                        max: 10,
+                        ticks: { stepSize: 2 }
+                    }
+                }
+            }
+        });
+
+        // Gráfico de Capacidades Bancarias
+        const ctxBancario = document.getElementById('bancarioChart').getContext('2d');
+        new Chart(ctxBancario, {
+            type: 'bar',
+            data: {
+                labels: ['Apps Móviles\nBancarias', 'Integración\nSistemas', 'Backend\nFinanciero', 'Open\nBanking', 'Automatización\nBancaria'],
+                datasets: [{
+                    label: 'Nivel de Capacidad (1-10)',
+                    data: [9, 9, 8, 7, 6],
+                    backgroundColor: [
+                        'rgba(39, 174, 96, 0.8)',
+                        'rgba(39, 174, 96, 0.8)',
+                        'rgba(52, 152, 219, 0.8)',
+                        'rgba(241, 196, 15, 0.8)',
+                        'rgba(241, 196, 15, 0.8)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Capacidades del Equipo para Proyectos Bancarios',
+                        font: { size: 16 }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 10
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

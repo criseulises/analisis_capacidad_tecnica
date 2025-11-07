@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfiles Individuales - Equipo de Desarrollo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        header h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #7f8c8d;
+            font-size: 1.2em;
+        }
+
+        .back-button {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: all 0.3s;
+        }
+
+        .back-button:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+        }
+
+        .profiles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .profile-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .profile-header h2 {
+            font-size: 1.8em;
+            margin-bottom: 5px;
+        }
+
+        .profile-header .role {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .profile-body {
+            padding: 25px;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .info-value {
+            color: #7f8c8d;
+        }
+
+        .tags {
+            margin-top: 20px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            margin: 3px;
+        }
+
+        .tag.senior {
+            background: #27ae60;
+        }
+
+        .tag.semi-senior {
+            background: #3498db;
+        }
+
+        .tag.junior {
+            background: #f39c12;
+        }
+
+        .expand-btn {
+            width: 100%;
+            background: #2c3e50;
+            color: white;
+            border: none;
+            padding: 15px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        .expand-btn:hover {
+            background: #34495e;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 50px auto;
+            width: 90%;
+            max-width: 1000px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            overflow: hidden;
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            position: relative;
+        }
+
+        .close {
+            color: white;
+            float: right;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        .close:hover {
+            opacity: 0.7;
+        }
+
+        .modal-body {
+            padding: 40px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h3 {
+            color: #2c3e50;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .section ul {
+            list-style-position: inside;
+            color: #555;
+        }
+
+        .section li {
+            padding: 8px 0;
+        }
+
+        .strength-item {
+            color: #27ae60;
+        }
+
+        .weakness-item {
+            color: #e74c3c;
+        }
+
+        .opportunity-item {
+            color: #3498db;
+        }
+
+        .contact-info {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .contact-info p {
+            margin: 8px 0;
+        }
+
+        .tech-section {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+        }
+
+        @media (max-width: 768px) {
+            .profiles-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 20px auto;
+            }
+
+            .modal-body {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Perfiles Individuales del Equipo</h1>
+            <p>Análisis detallado de fortalezas, debilidades y oportunidades</p>
+            <a href="index.html" class="back-button">← Volver al Análisis General</a>
+        </header>
+
+        <div class="profiles-grid">
+            <!-- Profile 1: Roylin Rodriguez -->
+            <div class="profile-card" onclick="openModal('modal1')">
+                <div class="profile-header">
+                    <h2>Roylin Rodriguez</h2>
+                    <p class="role">Desarrollador Fullstack Backend-Focused</p>
+                </div>
+                <div class="profile-body">
+                    <div class="info-row">
+                        <span class="info-label">Empresa:</span>
+                        <span class="info-value">Altice Dominicana</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Nivel:</span>
+                        <span class="info-value">Semi-Senior</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Especialidad:</span>
+                        <span class="info-value">.NET / C#</span>
+                    </div>
+                    <div class="tags">
+                        <span class="tag">.NET</span>
+                        <span class="tag">C#</span>
+                        <span class="tag">SQL Server</span>
+                        <span class="tag">APIs REST</span>
+                    </div>
+                </div>
+                <button class="expand-btn">Ver Perfil Completo →</button>
+            </div>
+
+            <!-- Profile 2: Yahinniel Torres -->
+            <div class="profile-card" onclick="openModal('modal2')">
+                <div class="profile-header">
+                    <h2>Yahinniel Torres</h2>
+                    <p class="role">Full Stack Developer - Cloud & DevOps</p>
+                </div>
+                <div class="profile-body">
+                    <div class="info-row">
+                        <span class="info-label">Empresa:</span>
+                        <span class="info-value">UTreee IT</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Nivel:</span>
+                        <span class="info-value">Semi-Senior</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Especialidad:</span>
+                        <span class="info-value">Full Stack + AWS</span>
+                    </div>
+                    <div class="tags">
+                        <span class="tag">Next.js</span>
+                        <span class="tag">AWS</span>
+                        <span class="tag">Docker</span>
+                        <span class="tag">Kubernetes</span>
+                    </div>
+                </div>
+                <button class="expand-btn">Ver Perfil Completo →</button>
+            </div>
+
+            <!-- Profile 3: Axel Soto -->
+            <div class="profile-card" onclick="openModal('modal3')">
+                <div class="profile-header">
+                    <h2>Axel Soto</h2>
+                    <p class="role">iOS Developer (SwiftUI Specialist)</p>
+                </div>
+                <div class="profile-body">
+                    <div class="info-row">
+                        <span class="info-label">Empresa:</span>
+                        <span class="info-value">Banco Popular</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Nivel:</span>
+                        <span class="info-value">Junior-Semi Senior</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Especialidad:</span>
+                        <span class="info-value">iOS Nativo</span>
+                    </div>
+                    <div class="tags">
+                        <span class="tag">Swift</span>
+                        <span class="tag">SwiftUI</span>
+                        <span class="tag">Banca Móvil</span>
+                        <span class="tag">MVVM</span>
+                    </div>
+                </div>
+                <button class="expand-btn">Ver Perfil Completo →</button>
+            </div>
+
+            <!-- Profile 4: Ninel Feliz -->
+            <div class="profile-card" onclick="openModal('modal4')">
+                <div class="profile-header">
+                    <h2>Ninel Feliz</h2>
+                    <p class="role">Desarrolladora - UI/UX Designer</p>
+                </div>
+                <div class="profile-body">
+                    <div class="info-row">
+                        <span class="info-label">Empresa:</span>
+                        <span class="info-value">INTELCA SRL</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Nivel:</span>
+                        <span class="info-value">Junior</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Especialidad:</span>
+                        <span class="info-value">UI/UX + Backend</span>
+                    </div>
+                    <div class="tags">
+                        <span class="tag">React</span>
+                        <span class="tag">C#</span>
+                        <span class="tag">UI/UX</span>
+                        <span class="tag">SAP</span>
+                    </div>
+                </div>
+                <button class="expand-btn">Ver Perfil Completo →</button>
+            </div>
+
+            <!-- Profile 5: Emmanuel Espinal -->
+            <div class="profile-card" onclick="openModal('modal5')">
+                <div class="profile-header">
+                    <h2>Emmanuel Espinal</h2>
+                    <p class="role">Ingeniero Senior de Integración</p>
+                </div>
+                <div class="profile-body">
+                    <div class="info-row">
+                        <span class="info-label">Empresa:</span>
+                        <span class="info-value">Banreservas</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Nivel:</span>
+                        <span class="info-value">Senior</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Especialidad:</span>
+                        <span class="info-value">Integraciones + Microservicios</span>
+                    </div>
+                    <div class="tags">
+                        <span class="tag senior">Java</span>
+                        <span class="tag senior">Python</span>
+                        <span class="tag senior">Quarkus</span>
+                        <span class="tag senior">Oracle</span>
+                    </div>
+                </div>
+                <button class="expand-btn">Ver Perfil Completo →</button>
+            </div>
+
+            <!-- Profile 6: Gary Campusano (Dev) -->
+            <div class="profile-card" onclick="openModal('modal6')">
+                <div class="profile-header">
+                    <h2>Gary Campusano</h2>
+                    <p class="role">Backend Developer - Odoo Specialist</p>
+                </div>
+                <div class="profile-body">
+                    <div class="info-row">
+                        <span class="info-label">Empresa:</span>
+                        <span class="info-value">OIKOS CHAIN</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Nivel:</span>
+                        <span class="info-value">Junior</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Especialidad:</span>
+                        <span class="info-value">Odoo ERP + Python</span>
+                    </div>
+                    <div class="tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Odoo</span>
+                        <span class="tag">PostgreSQL</span>
+                        <span class="tag">Node.js</span>
+                    </div>
+                </div>
+                <button class="expand-btn">Ver Perfil Completo →</button>
+            </div>
+
+            <!-- Profile 7: Geremy Ferran -->
+            <div class="profile-card" onclick="openModal('modal7')">
+                <div class="profile-header">
+                    <h2>Geremy Ferran</h2>
+                    <p class="role">iOS + Full Stack Developer</p>
+                </div>
+                <div class="profile-body">
+                    <div class="info-row">
+                        <span class="info-label">Empresa:</span>
+                        <span class="info-value">Banco Popular</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Nivel:</span>
+                        <span class="info-value">Semi-Senior</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Especialidad:</span>
+                        <span class="info-value">iOS + .NET</span>
+                    </div>
+                    <div class="tags">
+                        <span class="tag">Swift</span>
+                        <span class="tag">.NET</span>
+                        <span class="tag">Blazor</span>
+                        <span class="tag">React</span>
+                    </div>
+                </div>
+                <button class="expand-btn">Ver Perfil Completo →</button>
+            </div>
+
+            <!-- Profile 8: Gary Campusano (QA) -->
+            <div class="profile-card" onclick="openModal('modal8')">
+                <div class="profile-header">
+                    <h2>Gary Campusano</h2>
+                    <p class="role">QA Funcional - Test Automation</p>
+                </div>
+                <div class="profile-body">
+                    <div class="info-row">
+                        <span class="info-label">Empresa:</span>
+                        <span class="info-value">Babel Group</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Nivel:</span>
+                        <span class="info-value">Junior-Semi Senior</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Especialidad:</span>
+                        <span class="info-value">QA + Automatización</span>
+                    </div>
+                    <div class="tags">
+                        <span class="tag">ISTQB</span>
+                        <span class="tag">Cypress</span>
+                        <span class="tag">Selenium</span>
+                        <span class="tag">Postman</span>
+                    </div>
+                </div>
+                <button class="expand-btn">Ver Perfil Completo →</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 1: Roylin Rodriguez -->
+    <div id="modal1" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" onclick="closeModal('modal1')">&times;</span>
+                <h2>Roylin Enrique Rodriguez Jimenez</h2>
+                <p>Desarrollador Fullstack Backend-Focused</p>
+            </div>
+            <div class="modal-body">
+                <div class="contact-info">
+                    <p><strong>Email:</strong> roylinrodriguez5@gmail.com</p>
+                    <p><strong>Teléfono:</strong> 829-464-0814</p>
+                    <p><strong>LinkedIn:</strong> linkedin.com/in/roylinrodriguez/</p>
+                    <p><strong>Ubicación:</strong> Santo Domingo Norte, República Dominicana</p>
+                </div>
+
+                <div class="section">
+                    <h3>Educación</h3>
+                    <ul>
+                        <li>Tecnólogo en Desarrollo de Software - ITLA (2022-2025) - GPA: 3.8</li>
+                        <li>Ingeniería de Software - Universidad Dominico Americano (2025-Actualidad)</li>
+                        <li>Oracle Next Education (ONE) / Alura Latam (2023)</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Experiencia Laboral</h3>
+                    <ul>
+                        <li><strong>Desarrollador Back-end</strong> - Altice Dominicana (01/2024 - Actualidad)</li>
+                        <li>Diseño e implementación de backend con .NET 8.0 y C#</li>
+                        <li>Desarrollo de APIs REST optimizadas</li>
+                        <li>Implementación de inyección de dependencias, autenticación y autorización</li>
+                        <li>Gestión de control de versiones y refactorización de arquitectura</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Stack Tecnológico</h3>
+                    <div class="tech-section">
+                        <p><strong>Lenguajes:</strong> C#, Java, SQL, JavaScript</p>
+                        <p><strong>Frameworks:</strong> .NET, .NET Core, Entity Framework, SpringBoot, Next.js, React</p>
+                        <p><strong>Bases de Datos:</strong> MySQL, SQL Server, PostgreSQL, Oracle, MongoDB</p>
+                        <p><strong>Arquitecturas:</strong> MVC, N-Layers, Onion</p>
+                        <p><strong>Herramientas:</strong> Git, Github, Jira, Azure DevOps</p>
+                        <p><strong>Móvil:</strong> Kotlin, Android Studio</p>
+                        <p><strong>Idiomas:</strong> Español (nativo), Inglés (B2)</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Fortalezas</h3>
+                    <ul>
+                        <li class="strength-item">Sólida experiencia en desarrollo backend con .NET y C#</li>
+                        <li class="strength-item">Conocimiento profundo de arquitecturas de software (MVC, N-Layers, Onion)</li>
+                        <li class="strength-item">Experiencia en empresa de telecomunicaciones (Altice)</li>
+                        <li class="strength-item">Capacidad de liderazgo y gestión de equipos técnicos</li>
+                        <li class="strength-item">Buen nivel de inglés (B2)</li>
+                        <li class="strength-item">Experiencia en docencia y mentoría</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Debilidades / Oportunidades de Mejora</h3>
+                    <ul>
+                        <li class="weakness-item">Limitada experiencia en cloud (AWS, Azure)</li>
+                        <li class="weakness-item">Sin experiencia documentada en IA o ML</li>
+                        <li class="weakness-item">Falta de experiencia en automatización de procesos de IA</li>
+                        <li class="weakness-item">No hay evidencia de trabajo con herramientas de orquestación como n8n</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Alineación con Oportunidades de Negocio</h3>
+                    <ul>
+                        <li class="opportunity-item"><strong>Automatización de IA:</strong> BAJO - Requiere capacitación en IA y automatización</li>
+                        <li class="opportunity-item"><strong>Sector Bancario:</strong> MEDIO - Buena base técnica pero sin experiencia directa en banca</li>
+                        <li class="opportunity-item"><strong>Desarrollo de APIs:</strong> ALTO - Experiencia sólida en diseño e implementación de APIs</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 2: Yahinniel Torres -->
+    <div id="modal2" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" onclick="closeModal('modal2')">&times;</span>
+                <h2>Yahinniel A. Torres Vásquez</h2>
+                <p>Full Stack Developer - Cloud & DevOps Specialist</p>
+            </div>
+            <div class="modal-body">
+                <div class="contact-info">
+                    <p><strong>Email:</strong> yahinnielvas@gmail.com</p>
+                    <p><strong>Teléfono:</strong> +1 (829)-340-8864</p>
+                    <p><strong>GitHub:</strong> Yahi-Dev</p>
+                </div>
+
+                <div class="section">
+                    <h3>Educación</h3>
+                    <ul>
+                        <li>Técnico en Desarrollo de Software - ITLA (2022-2024)</li>
+                        <li>Ingeniería en Tecnologías Computacionales - UNIBE (2025-Presente)</li>
+                        <li>Certificaciones: Next.js, Power BI, Angular, Docker/Kubernetes, GitHub Actions</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Experiencia Laboral</h3>
+                    <ul>
+                        <li><strong>Full Stack Developer</strong> - UTreee IT Advanced Solutions (Mayo 2025 - Presente)</li>
+                        <li>Desarrollo con Next.js, React, Node.js, Laravel, .NET</li>
+                        <li>Arquitecturas modulares y microservicios</li>
+                        <li>Implementación de WebSockets y funciones en tiempo real</li>
+                        <li>Soluciones cloud con AWS (EC2, S3, RDS)</li>
+                        <li>Docker/Kubernetes para orquestación</li>
+                        <li>CI/CD con GitHub Actions y Azure DevOps</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Stack Tecnológico</h3>
+                    <div class="tech-section">
+                        <p><strong>Frontend:</strong> React.js, Next.js, Angular, Blazor, TypeScript, JavaScript</p>
+                        <p><strong>Backend:</strong> .NET, C#, Node.js, Laravel, Python</p>
+                        <p><strong>Bases de Datos:</strong> SQL Server, MySQL, PostgreSQL, Snowflake</p>
+                        <p><strong>Cloud & DevOps:</strong> AWS (EC2, S3, RDS, Lambda), Docker, Kubernetes, IIS</p>
+                        <p><strong>CI/CD:</strong> GitHub Actions, Azure DevOps</p>
+                        <p><strong>Otras:</strong> WebSockets, RESTful APIs, Microservicios</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Fortalezas</h3>
+                    <ul>
+                        <li class="strength-item">Desarrollador full-stack completo con dominio de múltiples tecnologías</li>
+                        <li class="strength-item">Experiencia sólida en cloud computing (AWS) y DevOps</li>
+                        <li class="strength-item">Conocimiento de arquitecturas modernas (microservicios, arquitectura limpia)</li>
+                        <li class="strength-item">Experiencia en implementación de CI/CD pipelines</li>
+                        <li class="strength-item">Capacidad de trabajo con WebSockets y tiempo real</li>
+                        <li class="strength-item">Diversidad de industrias (IT solutions, tecnología, gobierno)</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Debilidades / Oportunidades de Mejora</h3>
+                    <ul>
+                        <li class="weakness-item">Sin experiencia en IA o machine learning</li>
+                        <li class="weakness-item">Falta de especialización en automatización de procesos con IA</li>
+                        <li class="weakness-item">No hay evidencia de trabajo con n8n o herramientas similares</li>
+                        <li class="weakness-item">Sin experiencia directa en sector bancario</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Alineación con Oportunidades de Negocio</h3>
+                    <ul>
+                        <li class="opportunity-item"><strong>Automatización de IA:</strong> MEDIO - Tiene las bases técnicas pero necesita upskilling en IA</li>
+                        <li class="opportunity-item"><strong>Sector Bancario:</strong> BAJO - Sin experiencia previa en finanzas</li>
+                        <li class="opportunity-item"><strong>Infraestructura Cloud:</strong> ALTO - Experiencia directa con AWS y DevOps</li>
+                        <li class="opportunity-item"><strong>Desarrollo de SaaS:</strong> ALTO - Capacidad para construir aplicaciones escalables</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 3: Axel Soto -->
+    <div id="modal3" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" onclick="closeModal('modal3')">&times;</span>
+                <h2>Axel Manuel Soto Pérez</h2>
+                <p>Frontend-Mobile Developer (iOS Specialist)</p>
+            </div>
+            <div class="modal-body">
+                <div class="contact-info">
+                    <p><strong>Email:</strong> axelmlsoto@gmail.com</p>
+                    <p><strong>Teléfono:</strong> +1 829-752-5036</p>
+                    <p><strong>LinkedIn:</strong> Axel Soto</p>
+                    <p><strong>Ubicación:</strong> Santo Domingo D.N, Evaristo Morales</p>
+                </div>
+
+                <div class="section">
+                    <h3>Educación</h3>
+                    <ul>
+                        <li>Tecnólogo en Desarrollo de Software - ITLA (2022-2025) - GPA: 3.2</li>
+                        <li>Samsung Innovation Campus (2024) - Python</li>
+                        <li>Certificaciones: Scrum Fundamentals (2025), Agile Methodologies, Leadership Skills</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Experiencia Laboral</h3>
+                    <ul>
+                        <li><strong>Frontend-Mobile Developer (SwiftUI)</strong> - Banco Popular Dominicano (2025 - Presente)</li>
+                        <li>Desarrollo con SwiftUI, MVVM, Combine, Concurrency</li>
+                        <li>Componentes modulares y code reviews</li>
+                        <li>Integración segura con APIs bancarias core</li>
+                        <li>Enfoque en autenticación, confiabilidad y observabilidad</li>
+                        <li>Mejoras de accesibilidad (Dynamic Type, VoiceOver)</li>
+                        <li>Optimización de rendimiento</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Proyectos Destacados</h3>
+                    <ul>
+                        <li><strong>Azis</strong> (Popular Bank Challenge 2024): Asesor de IA para PYMEs en Flutter</li>
+                        <li><strong>Coop Aspire Assistant</strong> en Flutter</li>
+                        <li><strong>Real State, Internet Banking, API para restaurante</strong> en .NET</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Stack Tecnológico</h3>
+                    <div class="tech-section">
+                        <p><strong>Mobile:</strong> SwiftUI, MVVM, Combine, Concurrency, Flutter</p>
+                        <p><strong>Backend:</strong> .NET, C#</p>
+                        <p><strong>Herramientas:</strong> XCode, Git</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Fortalezas</h3>
+                    <ul>
+                        <li class="strength-item">Especialista en desarrollo iOS nativo con SwiftUI</li>
+                        <li class="strength-item">Experiencia directa en sector bancario (Banco Popular)</li>
+                        <li class="strength-item">Conocimiento de APIs bancarias y sistemas de seguridad financiera</li>
+                        <li class="strength-item">Enfoque en accesibilidad y experiencia de usuario</li>
+                        <li class="strength-item">Fundador de AppSchool - capacidad de liderazgo y mentoría</li>
+                        <li class="strength-item">Mentalidad de producto (product-core mindset)</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Debilidades / Oportunidades de Mejora</h3>
+                    <ul>
+                        <li class="weakness-item">Especialización muy enfocada en iOS - limitada experiencia en otras plataformas</li>
+                        <li class="weakness-item">Sin experiencia en IA o automatización</li>
+                        <li class="weakness-item">Limitado conocimiento de backend y arquitecturas de servidor</li>
+                        <li class="weakness-item">No se menciona nivel de inglés</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Alineación con Oportunidades de Negocio</h3>
+                    <ul>
+                        <li class="opportunity-item"><strong>Automatización de IA:</strong> BAJO - Sin experiencia en este ámbito</li>
+                        <li class="opportunity-item"><strong>Sector Bancario:</strong> ALTO - Actualmente trabajando en Banco Popular</li>
+                        <li class="opportunity-item"><strong>Desarrollo de Apps Móviles:</strong> ALTO - Especialista en iOS</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 4: Ninel Feliz -->
+    <div id="modal4" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" onclick="closeModal('modal4')">&times;</span>
+                <h2>Ninel G. Feliz</h2>
+                <p>Desarrolladora de Software - UI/UX Designer</p>
+            </div>
+            <div class="modal-body">
+                <div class="contact-info">
+                    <p><strong>Email:</strong> ninelfeliz2@gmail.com</p>
+                    <p><strong>Teléfono:</strong> 849-621-5558</p>
+                    <p><strong>GitHub:</strong> github.com/NinelGFR/</p>
+                    <p><strong>Ubicación:</strong> Calle Luis Alexis Javier (Piedra Blanca Haina)</p>
+                </div>
+
+                <div class="section">
+                    <h3>Educación</h3>
+                    <ul>
+                        <li>Técnico Superior en Desarrollo de Software - ITLA (2023-2025)</li>
+                        <li>Desarrollador de Aplicaciones Informáticas - IPHA (2022-2024)</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Experiencia Laboral</h3>
+                    <ul>
+                        <li><strong>UI/UX Designer</strong> - INTELCA SRL (Mayo 2025 - Presente)</li>
+                        <li><strong>Soporte Técnico SAP</strong> - INFORUM (Dic 2024 - Mar 2025)</li>
+                        <li><strong>Process Control</strong> - Fresenius Kabi (Oct 2022 - Ene 2023)</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Stack Tecnológico</h3>
+                    <div class="tech-section">
+                        <p><strong>Frontend:</strong> React, HTML/CSS, JavaScript</p>
+                        <p><strong>Backend:</strong> C#, ASP.NET MVC, Express.js, Java</p>
+                        <p><strong>Bases de Datos:</strong> SQL</p>
+                        <p><strong>UI/UX:</strong> Diseño de interfaces y experiencia de usuario</p>
+                        <p><strong>Idiomas:</strong> Inglés (B1)</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Fortalezas</h3>
+                    <ul>
+                        <li class="strength-item">Combinación única de desarrollo y diseño UI/UX</li>
+                        <li class="strength-item">Experiencia en sistemas ERP y metodologías ágiles (Scrum)</li>
+                        <li class="strength-item">Conocimiento de SAP</li>
+                        <li class="strength-item">Capacidad de trabajar en frontend y backend</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Debilidades / Oportunidades de Mejora</h3>
+                    <ul>
+                        <li class="weakness-item">Experiencia laboral limitada y de corta duración</li>
+                        <li class="weakness-item">Sin especialización clara en un área específica</li>
+                        <li class="weakness-item">Sin experiencia en IA, automatización o cloud</li>
+                        <li class="weakness-item">Nivel de inglés B1 - podría mejorar</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Alineación con Oportunidades de Negocio</h3>
+                    <ul>
+                        <li class="opportunity-item"><strong>Automatización de IA:</strong> BAJO - Sin experiencia relevante</li>
+                        <li class="opportunity-item"><strong>Sector Bancario:</strong> BAJO - Sin experiencia en finanzas</li>
+                        <li class="opportunity-item"><strong>Diseño de Experiencia:</strong> ALTO - Perfil UI/UX es valioso para productos</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 5: Emmanuel Espinal -->
+    <div id="modal5" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" onclick="closeModal('modal5')">&times;</span>
+                <h2>Emmanuel Espinal Ceballos</h2>
+                <p>Ingeniero Senior de Integración - Backend Specialist</p>
+            </div>
+            <div class="modal-body">
+                <div class="contact-info">
+                    <p><strong>Email:</strong> eeceballos@pm.me</p>
+                    <p><strong>Teléfono:</strong> +1 (829) 524-2360</p>
+                </div>
+
+                <div class="section">
+                    <h3>Educación</h3>
+                    <ul>
+                        <li>Ingeniería en Tecnologías Computacionales - UNIBE (2025 - Presente)</li>
+                        <li>Tecnólogo en Desarrollo de Software - ITLA (2022-2024)</li>
+                        <li>Bachiller Técnico - IPCAS (2017-2021)</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Experiencia Laboral</h3>
+                    <ul>
+                        <li><strong>Ingeniero Senior de Integración</strong> - Banreservas (Agosto 2025 - Actualidad)</li>
+                        <li>Gestión de proyectos bajo metodologías Agile</li>
+                        <li>Diseño e implementación de microservicios y sistemas distribuidos</li>
+                        <li>Desarrollo de aplicaciones cloud-native con programación reactiva</li>
+                        <li>Liderazgo técnico en integración y optimización de procesos</li>
+                        <li><strong>Ingeniero Desarrollo CRM</strong> - Banreservas (Mayo 2024 - Agosto 2025)</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Stack Tecnológico</h3>
+                    <div class="tech-section">
+                        <p><strong>Lenguajes:</strong> Java, Python, Kotlin, TypeScript</p>
+                        <p><strong>Frameworks:</strong> Quarkus, FastAPI, Jetpack Compose, Express.js</p>
+                        <p><strong>Cloud & DevOps:</strong> Docker, OpenShift, Git</p>
+                        <p><strong>Bases de Datos:</strong> PostgreSQL, MongoDB, Oracle</p>
+                        <p><strong>Sistema Operativo:</strong> Linux</p>
+                        <p><strong>Idiomas:</strong> Español (nativo), Inglés (C2 Proficient)</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Competencias Técnicas</h3>
+                    <ul>
+                        <li>Estructuras de datos y algoritmos</li>
+                        <li>Programación orientada a objetos</li>
+                        <li>Desarrollo e integración de APIs</li>
+                        <li>Programación reactiva</li>
+                        <li>Microservicios y sistemas distribuidos</li>
+                        <li>Aplicaciones nativas en la nube</li>
+                        <li>Metodologías ágiles y gestión de proyectos</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Fortalezas</h3>
+                    <ul>
+                        <li class="strength-item">Posición senior con experiencia en sector bancario (Banreservas)</li>
+                        <li class="strength-item">Experiencia en gestión de proyectos y liderazgo técnico</li>
+                        <li class="strength-item">Sólido conocimiento de arquitecturas modernas (microservicios, cloud-native)</li>
+                        <li class="strength-item">Experiencia en automatización de procesos</li>
+                        <li class="strength-item">Excelente nivel de inglés (C2)</li>
+                        <li class="strength-item">Conocimiento de sistemas bancarios complejos (FICO DMPS, Oracle)</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Debilidades / Oportunidades de Mejora</h3>
+                    <ul>
+                        <li class="weakness-item">Sin experiencia documentada en IA o machine learning</li>
+                        <li class="weakness-item">Falta de experiencia con herramientas de automatización como n8n</li>
+                        <li class="weakness-item">No se mencionan tecnologías de voice AI o LLMs</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Alineación con Oportunidades de Negocio</h3>
+                    <ul>
+                        <li class="opportunity-item"><strong>Automatización de IA:</strong> MEDIO - Tiene experiencia en automatización pero no en IA</li>
+                        <li class="opportunity-item"><strong>Sector Bancario:</strong> ALTO - Actualmente trabajando en Banreservas, posición senior</li>
+                        <li class="opportunity-item"><strong>Integración de Sistemas:</strong> ALTO - Especialista en integraciones complejas</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 6: Gary Campusano (Dev) -->
+    <div id="modal6" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" onclick="closeModal('modal6')">&times;</span>
+                <h2>Gary Alexander Campusano Paredes</h2>
+                <p>Desarrollador BackEnd - Odoo Specialist</p>
+            </div>
+            <div class="modal-body">
+                <div class="contact-info">
+                    <p><strong>Email:</strong> ingcampusano@outlook.com</p>
+                    <p><strong>Teléfono:</strong> +1 809-668-5187</p>
+                </div>
+
+                <div class="section">
+                    <h3>Educación</h3>
+                    <ul>
+                        <li>Tecnólogo en Desarrollo de Software - ITLA (2022-2024)</li>
+                        <li>Samsung Innovation Campus - Python e IA (Enero-Junio 2023)</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Experiencia Laboral</h3>
+                    <ul>
+                        <li><strong>Junior Odoo Developer</strong> - OIKOS CHAIN S.R.L (Febrero 2025 - Presente)</li>
+                        <li>Desarrollo y personalización de módulos Odoo</li>
+                        <li>Automatización de procesos empresariales</li>
+                        <li>Integración de APIs</li>
+                        <li>Gestión de bases de datos PostgreSQL</li>
+                        <li>Soporte técnico y resolución de errores</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Stack Tecnológico</h3>
+                    <div class="tech-section">
+                        <p><strong>Lenguajes:</strong> Python, C#, JavaScript</p>
+                        <p><strong>Frameworks:</strong> Node.js, Express, FastAPI</p>
+                        <p><strong>Herramientas:</strong> Git, GitHub, RESTful APIs, Handlebars, Pug</p>
+                        <p><strong>Especialización:</strong> Odoo ERP</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Fortalezas</h3>
+                    <ul>
+                        <li class="strength-item">Especialización en Odoo ERP - nicho de mercado valioso</li>
+                        <li class="strength-item">Experiencia en automatización de procesos empresariales</li>
+                        <li class="strength-item">Capacidad de liderazgo y trabajo en equipo</li>
+                        <li class="strength-item">Formación en Python e IA (Samsung Innovation Campus)</li>
+                        <li class="strength-item">Adaptabilidad a nuevas tecnologías</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Debilidades / Oportunidades de Mejora</h3>
+                    <ul>
+                        <li class="weakness-item">Experiencia laboral limitada (recién graduado)</li>
+                        <li class="weakness-item">Sin experiencia en cloud computing o DevOps</li>
+                        <li class="weakness-item">Falta de experiencia en IA aplicada más allá de la formación básica</li>
+                        <li class="weakness-item">No se menciona nivel de inglés</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Alineación con Oportunidades de Negocio</h3>
+                    <ul>
+                        <li class="opportunity-item"><strong>Automatización de IA:</strong> MEDIO - Tiene bases de Python e IA, necesita upskilling</li>
+                        <li class="opportunity-item"><strong>Sector Bancario:</strong> BAJO - Sin experiencia en finanzas</li>
+                        <li class="opportunity-item"><strong>Automatización ERP:</strong> ALTO - Especialista en Odoo</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 7: Geremy Ferran -->
+    <div id="modal7" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" onclick="closeModal('modal7')">&times;</span>
+                <h2>Geremy Ferran</h2>
+                <p>Desarrollador de Software - iOS & Full Stack</p>
+            </div>
+            <div class="modal-body">
+                <div class="contact-info">
+                    <p><strong>Email:</strong> geremy.ferran@gmail.com</p>
+                    <p><strong>Teléfono:</strong> (809) 929-6594</p>
+                    <p><strong>LinkedIn:</strong> linkedin.com/in/geremydev</p>
+                </div>
+
+                <div class="section">
+                    <h3>Educación</h3>
+                    <ul>
+                        <li>Tecnólogo en Desarrollo de Software - ITLA (Sep 2022 - Abr 2025)</li>
+                        <li>Samsung Innovation Campus - Python e IA (Ene 2024 - Jul 2024)</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Experiencia Laboral</h3>
+                    <ul>
+                        <li><strong>Desarrollador iOS</strong> - Banco Popular Dominicano (Marzo 2025 - Presente)</li>
+                        <li>Desarrollo y mantenimiento de aplicaciones iOS nativas con Swift/SwiftUI</li>
+                        <li>Diseño de arquitectura e implementación de funcionalidades</li>
+                        <li>Patrones de diseño MVVM y consumo de APIs RESTful</li>
+                        <li><strong>Desarrollador Fullstack</strong> - Smartraveling Group (Agosto 2024 - Presente)</li>
+                        <li><strong>Pasante Full Stack</strong> - HarPer Technologies (Abril - Agosto 2024)</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Stack Tecnológico</h3>
+                    <div class="tech-section">
+                        <p><strong>Mobile:</strong> Swift, SwiftUI, XCode</p>
+                        <p><strong>Backend:</strong> C#, .NET, Dapper, Python</p>
+                        <p><strong>Frontend:</strong> Blazor, React, TypeScript, HTML5/CSS3/JS</p>
+                        <p><strong>Bases de Datos:</strong> SQL Server, Oracle, SQL</p>
+                        <p><strong>Idiomas:</strong> Español (nativo), Inglés (B2)</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Fortalezas</h3>
+                    <ul>
+                        <li class="strength-item">Desarrollador versátil con experiencia end-to-end</li>
+                        <li class="strength-item">Especialización en iOS nativo (Swift/SwiftUI)</li>
+                        <li class="strength-item">Experiencia directa en sector bancario (Banco Popular)</li>
+                        <li class="strength-item">Conocimiento de arquitecturas limpias (Onion Architecture)</li>
+                        <li class="strength-item">Capacidad de trabajar en múltiples stacks tecnológicos</li>
+                        <li class="strength-item">Formación en Python e IA</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Debilidades / Oportunidades de Mejora</h3>
+                    <ul>
+                        <li class="weakness-item">Sin experiencia en cloud computing o DevOps</li>
+                        <li class="weakness-item">Falta de experiencia práctica en IA o automatización</li>
+                        <li class="weakness-item">Sin conocimiento de herramientas de orquestación (n8n, Make, etc.)</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Alineación con Oportunidades de Negocio</h3>
+                    <ul>
+                        <li class="opportunity-item"><strong>Automatización de IA:</strong> BAJO - Requiere capacitación específica</li>
+                        <li class="opportunity-item"><strong>Sector Bancario:</strong> ALTO - Actualmente en Banco Popular</li>
+                        <li class="opportunity-item"><strong>Desarrollo de Apps Móviles:</strong> ALTO - Especialista iOS</li>
+                        <li class="opportunity-item"><strong>Desarrollo Full Stack:</strong> ALTO - Experiencia completa en arquitecturas limpias</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 8: Gary Campusano (QA) -->
+    <div id="modal8" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" onclick="closeModal('modal8')">&times;</span>
+                <h2>Gary Alexander Campusano Paredes</h2>
+                <p>QA Funcional - Test Automation</p>
+            </div>
+            <div class="modal-body">
+                <div class="contact-info">
+                    <p><strong>Profesión:</strong> QA Funcional</p>
+                    <p><strong>País:</strong> República Dominicana</p>
+                </div>
+
+                <div class="section">
+                    <h3>Educación</h3>
+                    <ul>
+                        <li>Tecnólogo en Desarrollo de Software - ITLA (2025)</li>
+                        <li>Python e IA - Samsung Innovation Campus</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Certificaciones</h3>
+                    <ul>
+                        <li>ISTQB Certified Tester Foundation Level (CTFL 4.0)</li>
+                        <li>SCRUM Foundation Professional - Certiprof</li>
+                        <li>IT Essentials - Cisco</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Experiencia Laboral</h3>
+                    <ul>
+                        <li><strong>QA Funcional</strong> - Babel Group</li>
+                        <li>Diseño y planificación de casos de prueba</li>
+                        <li>Ejecución de pruebas en entornos definidos</li>
+                        <li>Documentación de resultados y trazabilidad</li>
+                        <li>Identificación, reporte y seguimiento de defectos</li>
+                        <li>Validación de requisitos funcionales</li>
+                        <li><strong>Junior Odoo Developer</strong> - OIKOS CHAIN S.R.L (Febrero - Junio 2025)</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Stack Tecnológico</h3>
+                    <div class="tech-section">
+                        <p><strong>Lenguajes:</strong> C#, VB.NET, LINQ, Python, JavaScript, SQL, Java, Odoo</p>
+                        <p><strong>Frameworks:</strong> Node, Express</p>
+                        <p><strong>Bases de Datos:</strong> SQL Server, PostgreSQL</p>
+                        <p><strong>Herramientas QA:</strong> Jira, Azure DevOps, Swagger, Postman, Cypress, Selenium, Appium, Cucumber, SoapUI</p>
+                        <p><strong>Control de versiones:</strong> Git, GitHub</p>
+                        <p><strong>Idiomas:</strong> Español (nativo), Inglés (limitado)</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Fortalezas</h3>
+                    <ul>
+                        <li class="strength-item">Certificación ISTQB - estándar internacional en testing</li>
+                        <li class="strength-item">Experiencia en automatización de pruebas (Cypress, Selenium, Appium)</li>
+                        <li class="strength-item">Conocimiento de múltiples herramientas de testing</li>
+                        <li class="strength-item">Experiencia en metodologías ágiles</li>
+                        <li class="strength-item">Capacidad de trabajar con APIs (Swagger, Postman, SoapUI)</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Debilidades / Oportunidades de Mejora</h3>
+                    <ul>
+                        <li class="weakness-item">Nivel de inglés limitado - crítico para documentación técnica</li>
+                        <li class="weakness-item">Sin experiencia en IA o automatización inteligente</li>
+                        <li class="weakness-item">Falta de especialización en testing de sistemas de IA</li>
+                        <li class="weakness-item">Sin experiencia en sector bancario</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Alineación con Oportunidades de Negocio</h3>
+                    <ul>
+                        <li class="opportunity-item"><strong>Automatización de IA:</strong> MEDIO - Tiene bases pero necesita especialización en testing de IA</li>
+                        <li class="opportunity-item"><strong>Sector Bancario:</strong> BAJO - Sin experiencia previa</li>
+                        <li class="opportunity-item"><strong>QA y Testing:</strong> ALTO - Certificado y con experiencia práctica</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = "block";
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = "none";
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
