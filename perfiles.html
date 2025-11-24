@@ -280,7 +280,7 @@
 <body>
     <div class="container">
         <header>
-            <h1>Perfiles Individuales del Equipo</h1>
+            <h1>Perfiles Individuales del Equipo (10 Miembros)</h1>
             <p>Análisis detallado de fortalezas, debilidades y oportunidades</p>
             <a href="index.html" class="back-button">← Volver al Análisis General</a>
         </header>
@@ -513,6 +513,64 @@
                         <span class="tag">Cypress</span>
                         <span class="tag">Selenium</span>
                         <span class="tag">Postman</span>
+                    </div>
+                </div>
+                <button class="expand-btn">Ver Perfil Completo →</button>
+            </div>
+
+            <!-- Profile 9: Cristian Sanchez -->
+            <div class="profile-card" onclick="openModal('modal9')" style="border: 3px solid #27ae60;">
+                <div class="profile-header" style="background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);">
+                    <h2>Cristian Sanchez</h2>
+                    <p class="role">Full Stack Java Developer</p>
+                </div>
+                <div class="profile-body">
+                    <div class="info-row">
+                        <span class="info-label">Empresa:</span>
+                        <span class="info-value">Agilesoft / Banco Popular</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Nivel:</span>
+                        <span class="info-value">Semi-Senior</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Especialidad:</span>
+                        <span class="info-value">Java + Kafka + IA</span>
+                    </div>
+                    <div class="tags">
+                        <span class="tag">Quarkus</span>
+                        <span class="tag">Kafka</span>
+                        <span class="tag">Spring Boot</span>
+                        <span class="tag">React</span>
+                    </div>
+                </div>
+                <button class="expand-btn">Ver Perfil Completo →</button>
+            </div>
+
+            <!-- Profile 10: Joerlyn Morfe -->
+            <div class="profile-card" onclick="openModal('modal10')" style="border: 3px solid #27ae60;">
+                <div class="profile-header" style="background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);">
+                    <h2>Joerlyn Morfe</h2>
+                    <p class="role">Solution Architect - VP Level</p>
+                </div>
+                <div class="profile-body">
+                    <div class="info-row">
+                        <span class="info-label">Empresa:</span>
+                        <span class="info-value">BHD León / UNIBE</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Nivel:</span>
+                        <span class="info-value">Senior/Architect</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Especialidad:</span>
+                        <span class="info-value">Cloud + Arquitectura</span>
+                    </div>
+                    <div class="tags">
+                        <span class="tag senior">AWS</span>
+                        <span class="tag senior">Architect</span>
+                        <span class="tag senior">Kafka</span>
+                        <span class="tag senior">DevOps</span>
                     </div>
                 </div>
                 <button class="expand-btn">Ver Perfil Completo →</button>
@@ -1186,6 +1244,218 @@
                         <li class="opportunity-item"><strong>Automatización de IA:</strong> MEDIO - Tiene bases pero necesita especialización en testing de IA</li>
                         <li class="opportunity-item"><strong>Sector Bancario:</strong> BAJO - Sin experiencia previa</li>
                         <li class="opportunity-item"><strong>QA y Testing:</strong> ALTO - Certificado y con experiencia práctica</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 9: Cristian Sanchez -->
+    <div id="modal9" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" style="background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);">
+                <span class="close" onclick="closeModal('modal9')">&times;</span>
+                <h2>Cristian Sanchez</h2>
+                <p>Full Stack Developer - Java Backend Specialist</p>
+            </div>
+            <div class="modal-body">
+                <div class="contact-info">
+                    <p><strong>Email:</strong> scristianeulises@gmail.com</p>
+                    <p><strong>Teléfono:</strong> (829) 499-4556</p>
+                    <p><strong>LinkedIn:</strong> linkedin.com/in/criseulises</p>
+                    <p><strong>Portfolio:</strong> https://crisandev.vercel.app</p>
+                </div>
+
+                <div class="section">
+                    <h3>Educación</h3>
+                    <ul>
+                        <li>Ingeniería en Tecnologías Computacionales - UNIBE (2024-Presente)</li>
+                        <li>Tecnólogo en Desarrollo de Software - ITLA (2021-2024)</li>
+                        <li>Master in Advanced Apache Kafka Architecture - Lite Thinking (2025-Presente)</li>
+                        <li>Artificial Intelligence & Python - Samsung Innovation Campus (2024)</li>
+                        <li>Web Development Bootcamp with JAVA - Talendig (2022)</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Experiencia Laboral</h3>
+                    <ul>
+                        <li><strong>Java Software Engineer</strong> - Agilesoft (2024-2025, contrato)</li>
+                        <li>Desarrollo de microservicios backend escalables con Quarkus, Apache Camel y Kafka</li>
+                        <li>Programación asíncrona y arquitectura orientada a eventos</li>
+                        <li>Docker, Kubernetes y OpenShift para despliegues containerizados</li>
+                        <li><strong>QA & Developer</strong> - Banco Popular (2023-2024)</li>
+                        <li>Liderazgo de QA y desarrollo backend con Java y Spring Boot</li>
+                        <li>Participación en migración del core bancario a arquitectura asíncrona con Kafka</li>
+                        <li>Diseño de sistema de documentación departamental con Next.js y Python/Java</li>
+                        <li><strong>Full Stack Developer Freelance</strong> (2021-Presente)</li>
+                        <li>Rediseño de IBanking con Flutter y Python + IA con Ollama</li>
+                        <li>Sistema de detección de fraude con Kafka, FastAPI y Random Forest</li>
+                        <li>Plataforma de lectura digital accesible con UNICEF</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Stack Tecnológico</h3>
+                    <div class="tech-section">
+                        <p><strong>Backend:</strong> Java 8/11/21, Spring Boot, Quarkus, Apache Camel, Python (Flask, Django, FastAPI)</p>
+                        <p><strong>Frontend:</strong> React, Next.js, JavaScript, Tailwind, SCSS</p>
+                        <p><strong>Messaging:</strong> Apache Kafka, Kafka Streams</p>
+                        <p><strong>Bases de Datos:</strong> PostgreSQL, MongoDB, MySQL, SQL Server</p>
+                        <p><strong>Cloud & DevOps:</strong> Docker, Kubernetes, OpenShift, Azure, CI/CD</p>
+                        <p><strong>Mobile:</strong> Android (Kotlin), iOS (Swift), Flutter</p>
+                        <p><strong>Testing:</strong> JUnit</p>
+                        <p><strong>Arquitectura:</strong> DDD, Event-Driven, Microservicios, RESTful APIs, SOAP</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Fortalezas</h3>
+                    <ul>
+                        <li class="strength-item">Especialización profunda en Java (Spring Boot, Quarkus) y microservicios</li>
+                        <li class="strength-item">Experiencia directa en sector bancario (Banco Popular) con core banking</li>
+                        <li class="strength-item">Dominio de Apache Kafka y arquitecturas event-driven</li>
+                        <li class="strength-item">Capacidad Full Stack completa: backend robusto + frontend moderno</li>
+                        <li class="strength-item">Experiencia en containerización (Docker, Kubernetes, OpenShift)</li>
+                        <li class="strength-item">Desarrollo móvil nativo (Kotlin, Swift) y cross-platform (Flutter)</li>
+                        <li class="strength-item">Trabajo con IA y machine learning (detección de fraude, Ollama)</li>
+                        <li class="strength-item">Experiencia con UNICEF - desarrollo con impacto social</li>
+                        <li class="strength-item">Formación activa continua (Master en Kafka, AI)</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Debilidades / Oportunidades de Mejora</h3>
+                    <ul>
+                        <li class="weakness-item">Sin experiencia documentada en cloud público avanzado (AWS, GCP)</li>
+                        <li class="weakness-item">Limitada experiencia con herramientas no-code (n8n, Make)</li>
+                        <li class="weakness-item">Sin experiencia con voice AI o síntesis de voz</li>
+                        <li class="weakness-item">Beneficiaría de certificaciones cloud (AWS, Azure)</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Alineación con Oportunidades de Negocio</h3>
+                    <ul>
+                        <li class="opportunity-item"><strong>Automatización de IA:</strong> MEDIO-ALTO - Experiencia con IA y Kafka, necesita upskilling en LLMs y voice AI</li>
+                        <li class="opportunity-item"><strong>Sector Bancario:</strong> ALTO - Experiencia directa con core banking asíncrono</li>
+                        <li class="opportunity-item"><strong>Arquitectura de Microservicios:</strong> ALTO - Dominio de Kafka y event-driven</li>
+                        <li class="opportunity-item"><strong>Desarrollo de APIs:</strong> ALTO - Experiencia sólida en RESTful y SOAP</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal 10: Joerlyn Morfe -->
+    <div id="modal10" class="modal">
+        <div class="modal-content">
+            <div class="modal-header" style="background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);">
+                <span class="close" onclick="closeModal('modal10')">&times;</span>
+                <h2>Joerlyn Mariano Morfe Ureña</h2>
+                <p>Solution Architect - Integration & Cloud Specialist</p>
+            </div>
+            <div class="modal-body">
+                <div class="contact-info">
+                    <p><strong>Email:</strong> Joerlyn_2088@hotmail.com</p>
+                    <p><strong>Teléfono:</strong> +1-829-961-2377</p>
+                </div>
+
+                <div class="section">
+                    <h3>Educación</h3>
+                    <ul>
+                        <li>Ingeniero en Informática - UTESA (2012)</li>
+                        <li>Master Executive en Administración de Telecomunicaciones y TI - EOI, Madrid (2014)</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Certificaciones</h3>
+                    <ul>
+                        <li>AWS Certified Solutions Architect – Associate</li>
+                        <li>Togaf</li>
+                        <li>Official Agile Coach Certification</li>
+                        <li>Scrum Master</li>
+                        <li>Product Owner</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Experiencia Laboral</h3>
+                    <ul>
+                        <li><strong>Profesor Adjunto</strong> - UNIBE (2022-Presente)</li>
+                        <li>Enseñanza de POO, Apps Móviles, Análisis y Diseño, QA, Desarrollo en Tiempo Real, Seguridad</li>
+                        <li><strong>2do VP - Integration Architect</strong> - BHD León (2020-Presente)</li>
+                        <li>Diseño de arquitecturas cloud (AWS, Azure) end-to-end</li>
+                        <li>Arquitectura de microservicios, Kafka, event-based, Saga pattern</li>
+                        <li>Stack: Spring Boot, Python, Prometheus, Grafana, SonarQube, React</li>
+                        <li>Incremento de decisiones arquitectónicas en >90%</li>
+                        <li><strong>AWS Architect & Tech Lead</strong> - FastID (2022-2024, consultor)</li>
+                        <li>Desarrollo de servicios AWS con Python y Flutter</li>
+                        <li>Infraestructura y seguridad con Cognito (OAuth)</li>
+                        <li>Despliegue: Lambda, API Gateway, CloudFormation, VPC, RDS</li>
+                        <li><strong>AWS DevOps</strong> - FLOULABS (2024-2025)</li>
+                        <li><strong>Solution Architect</strong> - Banesco Bank (2018-2020)</li>
+                        <li>Diseño de aplicaciones enterprise para core bank</li>
+                        <li>Stack: SOA, AWS, Cassandra, Fuse, MQ, OSB, C#</li>
+                        <li><strong>Product Development Manager</strong> - Agilisa Technologies (2013-2018)</li>
+                        <li>Gestión de equipo de 5 programadores, ~10 aplicaciones</li>
+                        <li>Incremento de disponibilidad (45%) y escalabilidad (75%)</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Stack Tecnológico</h3>
+                    <div class="tech-section">
+                        <p><strong>Cloud:</strong> AWS (experto certificado), Azure, GCP</p>
+                        <p><strong>Infraestructura:</strong> CloudFormation, AWS-CDK, Lambda, API Gateway, SNS, SQS, RDS, VPC</p>
+                        <p><strong>DevOps:</strong> CloudWatch, Auto Scaling, GuardDuty, CI/CD</p>
+                        <p><strong>Backend:</strong> C#, ASP.NET, Python, Spring Boot</p>
+                        <p><strong>Arquitectura:</strong> SOA, Microservicios, Event-Driven, Saga, DDD, Reactive</p>
+                        <p><strong>Messaging:</strong> Kafka</p>
+                        <p><strong>Containerización:</strong> Docker, Kubernetes</p>
+                        <p><strong>Frontend:</strong> React, TypeScript, HTML</p>
+                        <p><strong>Mobile:</strong> Flutter, Xamarin</p>
+                        <p><strong>Bases de Datos:</strong> MySQL, PostgreSQL, Cassandra, SQL Server, Oracle</p>
+                        <p><strong>Herramientas:</strong> Prometheus, Grafana, SonarQube, Selenium, GitHub, Jira</p>
+                        <p><strong>Idiomas:</strong> Español (nativo), Inglés (bilingüe)</p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h3>Fortalezas</h3>
+                    <ul>
+                        <li class="strength-item">Arquitecto de soluciones senior con 10+ años de experiencia</li>
+                        <li class="strength-item">Especialización en arquitectura cloud (AWS certificado)</li>
+                        <li class="strength-item">Experiencia directa en sector bancario (BHD León, Banesco) nivel VP</li>
+                        <li class="strength-item">Dominio de ciclo de vida cloud completo</li>
+                        <li class="strength-item">Expertise en arquitecturas modernas (microservicios, event-driven, SOA, Saga)</li>
+                        <li class="strength-item">Capacidad de liderazgo técnico y coaching arquitectónico</li>
+                        <li class="strength-item">Profesor universitario (UNIBE) - mentoría y enseñanza</li>
+                        <li class="strength-item">Bilingüe (Inglés/Español) - documentación y clientes internacionales</li>
+                        <li class="strength-item">Certificaciones relevantes (AWS, Togaf, Agile Coach)</li>
+                        <li class="strength-item">Track record: >90% mejora en decisiones arquitectónicas, +45% disponibilidad</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Debilidades / Oportunidades de Mejora</h3>
+                    <ul>
+                        <li class="weakness-item">Sin experiencia en IA generativa o LLMs</li>
+                        <li class="weakness-item">Falta de experiencia con herramientas no-code (n8n, Make)</li>
+                        <li class="weakness-item">Sin experiencia con voice AI o síntesis de voz</li>
+                        <li class="weakness-item">Certificaciones adicionales en GCP o Azure avanzado</li>
+                    </ul>
+                </div>
+
+                <div class="section">
+                    <h3>Alineación con Oportunidades de Negocio</h3>
+                    <ul>
+                        <li class="opportunity-item"><strong>Automatización de IA:</strong> MEDIO - Bases arquitectónicas sólidas, necesita upskilling en LLMs</li>
+                        <li class="opportunity-item"><strong>Sector Bancario:</strong> MUY ALTO - Experiencia senior VP en BHD León y Banesco</li>
+                        <li class="opportunity-item"><strong>Arquitectura Cloud:</strong> MUY ALTO - AWS certificado, experiencia práctica</li>
+                        <li class="opportunity-item"><strong>Liderazgo Técnico:</strong> MUY ALTO - Posición VP, liderazgo de equipos</li>
+                        <li class="opportunity-item"><strong>Consultoría:</strong> ALTO - Experiencia como consultor en múltiples industrias</li>
                     </ul>
                 </div>
             </div>
